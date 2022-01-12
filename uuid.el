@@ -6,7 +6,7 @@
 ;; Maintainer: Nic Ferrier <nferrier@ferrier.me.uk>
 ;; Keywords: lisp
 ;; Created: 5th September 2008
-;; Version: 0.0.3
+;; Version: 0.0.4
 
 ;; This file is free software
 
