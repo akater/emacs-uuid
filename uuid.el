@@ -23,7 +23,7 @@
 
 ;;; Code:
 
-(require 'cl)
+(eval-when-compile (require 'cl-lib))
 (require 'calc-comb)
 
 (defun uuid-create ()
@@ -35,7 +35,7 @@ wackos."
   (let ((bits 
 	 (apply           ; Note: Could use bit-vector under xemacs,
 	  'vector 	  ; but gnuemacs doesn't have it.
-	  (loop for i upto 127 collect (uuid-random-bit)))))
+	  (cl-loop for i upto 127 collect (uuid-random-bit)))))
     ;; Version field: byte 7, bits 7-4
     (aset bits 60 0)
     (aset bits 61 1)
@@ -53,12 +53,12 @@ wackos."
 
 (defun uuid-get-byte (uuid bytenum)
   (let* ((lsb (* bytenum 8))
-		 (msb (+ lsb 7))
-		 (val 0))
-	(loop for bitnum from lsb to msb do
-	      (let ((bit (aref uuid bitnum)))
-		(setq val (+ bit (lsh val 1)))))
-	val))
+	 (msb (+ lsb 7))
+	 (val 0))
+    (cl-loop for bitnum from lsb to msb do
+	     (let ((bit (aref uuid bitnum)))
+	       (setq val (+ bit (lsh val 1)))))
+    val))
 
 (defun uuid-to-stringy (uuid)
   "Convert UUID to a string"
